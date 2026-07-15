@@ -6,10 +6,10 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors()); // Allows your React app to talk to this backend
-app.use(express.json()); // Allows the backend to read JSON data sent from React
+app.use(cors());
+app.use(express.json());
 
-// Connect to MongoDB (Replace with your local MongoDB URI or MongoDB Atlas link)
+// Connect to MongoDB
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/ganesh_restaurant';
 mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB Connected Successfully'))
@@ -32,9 +32,9 @@ app.post('/api/reservations', async (req, res) => {
     const { name, email, phone, request } = req.body;
     
     const newReservation = new Reservation({ name, email, phone, request });
-    await newReservation.save(); // Saves data to MongoDB
+    await newReservation.save();
     
-   res.status(201).json({ success: true, message: 'Reservation stored successfully!' });
+    res.status(201).json({ success: true, message: 'Reservation stored successfully!' });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
